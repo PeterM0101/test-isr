@@ -1,15 +1,15 @@
-import { getUsers, getPhotos } from "./lib/data";
+import { getUsers, getPosts } from "./lib/data";
 import UsersSection from "./components/UsersSection";
+import PostsSection from "./components/PostsSection";
 import { User } from "../types/user";
-import { Photo } from "../types/photo";
-import PhotosSection from "./components/PhotosSection";
+import { Post } from "../types/post";
 
 export default async function Home() {
   let users: User[] = [];
-  let photos: Photo[] = [];
+  let posts: Post[] = [];
   let error = false;
   try {
-    [users, photos] = await Promise.all([getUsers(), getPhotos()]);
+    [users, posts] = await Promise.all([getUsers(), getPosts()]);
   } catch {
     error = true;
   }
@@ -22,7 +22,7 @@ export default async function Home() {
       ) : (
         <>
           <UsersSection users={users} />
-          <PhotosSection photos={photos} />
+          <PostsSection posts={posts} />
         </>
       )}
       <div className="mt-12 text-center text-xs text-gray-400">

@@ -1,20 +1,21 @@
 import { User } from "../../types/user";
-import { Photo } from "../../types/photo";
+import { Post } from "../../types/post";
+import { supabase } from "../../lib/supabaseClient";
 
 export async function getUsers(): Promise<User[]> {
-  const res = await fetch('https://jsonplaceholder.typicode.com/users', {
-    next: { revalidate: 60 },
-  });
-  if (!res.ok) throw new Error('Failed to fetch users');
-  const users: User[] = await res.json();
-  return users.slice(0, 3);
+  const { data, error } = await supabase
+    .from('users')
+    .select('*')
+    .limit(3);
+  if (error || !data) throw new Error('Failed to fetch users');
+  return data as User[];
 }
 
-export async function getPhotos(): Promise<Photo[]> {
-  const res = await fetch('https://jsonplaceholder.typicode.com/photos', {
-    next: { revalidate: 60 },
-  });
-  if (!res.ok) throw new Error('Failed to fetch photos');
-  const photos: Photo[] = await res.json();
-  return photos.slice(0, 2);
+export async function getPosts(): Promise<Post[]> {
+  const { data, error } = await supabase
+    .from('posts')
+    .select('*')
+    .limit(2);
+  if (error || !data) throw new Error('Failed to fetch posts');
+  return data as Post[];
 } 
