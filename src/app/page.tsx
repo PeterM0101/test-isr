@@ -1,8 +1,9 @@
+export const revalidate = 60;
 import { getUsers, getPosts } from "./lib/data";
 import UsersSection from "./components/UsersSection";
-import PostsSection from "./components/PostsSection";
 import { User } from "../types/user";
 import { Post } from "../types/post";
+import PostsSection from "./components/PostsSection";
 
 export default async function Home() {
   let users: User[] = [];
